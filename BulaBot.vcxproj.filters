@@ -14,4 +14,128 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Bula_bot_parts.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bula_opengl.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Bula_bot_scene.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\Base.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\BaseB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\BaseLid.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\BaseLidB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\Car.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\CarB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\Chassi.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\ChassiB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\Cherno.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\cube.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\cubea.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\cubeB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\CubeLines.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\cubeoneA.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\GripClosed.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\GripClosedB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\GripOpened.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\GripOpenedB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkCommom.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkCommomB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkM1.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkM1B.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkM2.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkM2B.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkThreePoints.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkThreePointsB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkThreePointsD.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkThreePointsD2.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LinkThreePointsDimensionsD.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LongLink.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\LongLinkB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\Point.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\ServoHolder.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\ServoHolderB.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="res\textures\Wheel.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\textures\OpenedGrip.x_t" />
+    <None Include="res\shaders\Basic.shader" />
+  </ItemGroup>
 </Project>
