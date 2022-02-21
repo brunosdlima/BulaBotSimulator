@@ -1,0 +1,2 @@
+C:/Users/Bruno Silva de Lima/Desktop/Calc_position/Bula_bot_scene/Project1/src/vendor/glm/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Bruno Silva de Lima/Desktop/Calc_position/Bula_bot_scene/Project1/src/vendor/glm/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
