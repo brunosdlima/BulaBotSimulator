@@ -3,6 +3,8 @@
 
 //Did not implemented the new version of grip box yet
 
+//This goes to the GripBox
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
