@@ -1,10 +1,6 @@
 //Always read docs.gl
 //The comand "GL_Check_Error(__LINE__);" is used to check for error and it has to be placed in the line following the error you are trying to identify. Remeber that the errors are cumulative and it shows all the errors before the line  you are calling it.
 
-//Did not implemented the new version of grip box yet
-
-//This goes to the GripBox 20:03
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
