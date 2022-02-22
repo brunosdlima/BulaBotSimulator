@@ -731,11 +731,11 @@ std::cout << "The programm is finished running !" << std::endl;
     //Abstract everything
     //Test two robots, test blue for selected
     //Test movement of car
-    //Função save point pra criar linked list com os pontos desejados
+    //FunÃ§Ã£o save point pra criar linked list com os pontos desejados
     //Deletar pontos indesejados
     //Criar arquivo txt para amazenar os angulos
     //Fazer robo pegar o box automaticamente
-    //Função move para percorrer linked list e nela checar colisao (mover somente em x caso colisao)
+    //FunÃ§Ã£o move para percorrer linked list e nela checar colisao (mover somente em x caso colisao)
     //Salvar imagem da tela (https://www.ti-enxame.com/pt/c%2B%2B/como-tirar-uma-captura-de-tela-no-opengl/973055474/)
     //Juntar em video (https://stackoverflow.com/questions/46444474/c-ffmpeg-create-mp4-file)
     //Include the images in the .exe file https://stackoverflow.com/questions/47414607/how-to-include-data-object-files-images-etc-in-program-and-access-the-symbol/47415163#47415163
