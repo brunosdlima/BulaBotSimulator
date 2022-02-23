@@ -445,6 +445,10 @@ public:
             }
         }
     }
+
+
+
+
     void change_grip_status(float robot_ground_angle_before_attachment) {
         grip_mode = !grip_mode;
         if (grip_mode) {
@@ -469,15 +473,38 @@ public:
             //Attach when possible
             internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (lk * cos((*this).get_triangle_angle() - robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (lk * sin((*this).get_triangle_angle() - robot_ground_angle_before_attachment)));
             for (int i = 0; i < Box::Box_Get_Adress(2, 0).size(); i++) {
+
+
+
                 if ((*this).grip_collision_point()->get_point_x() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_x() && (*this).grip_collision_point()->get_point_x() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_x() && (*this).grip_collision_point()->get_point_y() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_y() && (*this).grip_collision_point()->get_point_y() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_y()) {
                     (*this).holded_box = Box::Box_Get_Adress(2, 0)[i];
                     (*this).holded_box->box_de_attach('p');
                     (*this).holded_box->box_set_robot_angle_before_attachment(-robot_ground_angle_before_attachment);
                     (*this).holded_box->box_set_robot_actual_angle(robot_ground_angle_before_attachment);
+
+
+
+
                 }
             }
         }
     }
+
+    /*
+        public function triangleArea(A:Point,B:Point,C:Point):Number {
+			return (C.x*B.y-B.x*C.y)-(C.x*A.y-A.x*C.y)+(B.x*A.y-A.x*B.y);
+		}
+		public function isInsideSquare(A:Point,B:Point,C:Point,D:Point,P:Point):Boolean {
+			if (triangleArea(A,B,P)>0 || triangleArea(B,C,P)>0 || triangleArea(C,D,P)>0 || triangleArea(D,A,P)>0) {
+				return false;
+			}
+			return true;
+        }
+    */
+
+
+
+
     void change_grip_status_while_mirrorred(float robot_ground_angle_before_attachment) {
         grip_mode = !grip_mode;
         if (grip_mode) {
@@ -499,6 +526,11 @@ public:
             holded_box = nullptr;
         }
         else if (!grip_mode) {
+            
+            
+            
+            
+            
             //Attach when possible
             internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (-lk * cos((*this).get_triangle_angle() + robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (lk * sin((*this).get_triangle_angle() + robot_ground_angle_before_attachment)));
             for (int i = 0; i < Box::Box_Get_Adress(2, 0).size(); i++) {
@@ -508,7 +540,29 @@ public:
                     (*this).holded_box->box_set_robot_angle_before_attachment(-robot_ground_angle_before_attachment);
                     (*this).holded_box->box_set_robot_actual_angle(robot_ground_angle_before_attachment);
                 }
+
+
+                /*
+                public function triangleArea(A:Point,B:Point,C:Point):Number {
+			        return (C.x*B.y-B.x*C.y)-(C.x*A.y-A.x*C.y)+(B.x*A.y-A.x*B.y);
+		        }
+		        public function isInsideSquare(A:Point,B:Point,C:Point,D:Point,P:Point):Boolean {
+			        if (triangleArea(A,B,P)>0 || triangleArea(B,C,P)>0 || triangleArea(C,D,P)>0 || triangleArea(D,A,P)>0) {
+				        return false;
+			        }
+			        return true;
+		        }
+                */
+
+
+
+
             }
+
+
+
+
+
         }
     }
     void print_grip_coordinates() const {
@@ -658,11 +712,12 @@ public:
         Maximum_angle_long_arm = (float)(85.00 * 3.14159265 / 180.0); //Limitation for downward movement before internal collision
 
         (*this).set_robot_arm_points(theta_M1_max, theta_M2_max, false); //theta_M1_max, theta_M2_max
-
+        (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
     }
     Robot_arm(float Initial_robot_xa, float Initial_robot_ya, const bool& mirrorred, const Point& origina, const float& xz_anglea, const float& theta_M1_maxa, const float& theta_M1_mina, const float& theta_M2_maxa, const float& theta_M2_mina, const float& lea, const float& lca, const float& laa, const float& lfa, const float& lia, const float& lda, const float& lha, const float& lga, const float& lba, const float& lja, const float& lka, const float& theta1a, const float& theta37a, const float& theta810a, const float& theta_M1a, const float& theta_M2a, const float& forward_max_contacta, const float& backward_max_contacta, const float& Maximum_angle_long_arma) : Initial_robot_x(Initial_robot_xa), Initial_robot_y(Initial_robot_ya), angle_before_grip_closes(0.0), is_mirrorred(mirrorred), origin(origina), xz_angle(xz_anglea), theta_M1_max(theta_M1_maxa), theta_M1_min(theta_M1_mina), theta_M2_max(theta_M2_maxa), theta_M2_min(theta_M2_mina), le(lea), lc(lca), la(laa), lf(lfa), li(lia), ld(lda), lh(lha), lg(lga), lb(lba), lj(lja), lk(lka), theta1(theta1a), theta37(theta37a), theta810(theta810a), theta_M1(theta_M1a), theta_M2(theta_M2a), theta_M1_searched(0), theta_M2_searched(0), forward_max_contact(forward_max_contacta), backward_max_contact(backward_max_contacta), Maximum_angle_long_arm(Maximum_angle_long_arma) {
         (*this).Robot_Get_Counting(1);
         (*this).set_robot_arm_points(theta_M1_max, theta_M2_max, false);
+        (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
     }
     ~Robot_arm() {
         (*this).Robot_Get_Counting(0);

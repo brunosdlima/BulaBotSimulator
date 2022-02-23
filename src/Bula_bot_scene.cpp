@@ -92,6 +92,7 @@ int main(void)
     test_arm.set_robot_arm_points(robot_init_angle_m1, robot_init_angle_m2, false);
     test_arm.set_robot_init_position(Initial_robot_x, Initial_robot_y);
     test_arm.set_robot_origin(Initial_robot_x * 2.38f, (Initial_robot_y + 0.237f) * 2.38f); //Check if 0.237 is necessary *******************************
+    test_arm.mov_robot_arm_by_servos(0.0f, 0.0f, false);
     test_arm.update_arm_points(points_to_print);
     float upward_angle_increment = 0.0f, forward_angle_increment = 0.0f;
 
@@ -172,7 +173,7 @@ int main(void)
     Texture texture20("res/textures/GripOpenedB.png");
     Texture texture21("res/textures/GripClosedB.png");
     Texture texture22("res/textures/cubeB.png");
-    Texture texture23("res/textures/Cherno.png");
+    Texture texture23("res/textures/Point.png");
     
     texture1.Bind();
     shader.setUniform1i("u_texture", 0); // The second number needs to be the same as the "texture.Bind"
@@ -488,6 +489,16 @@ int main(void)
             shader.setUniformMat4f("u_MVP", mvp);                                     //Send new positions 
             renderer.Draw(va, ib, shader);                                            //Draw new positions
 
+            #ifdef _DEBUG
+                //Grip point
+                texture23.Bind();
+                shader.setUniform1i("u_texture", 0);                                      // The second number needs to be the same as the "texture.Bind"
+                model = glm::translate(glm::mat4(1.0f), glm::vec3(P10a / 2.38f, P10b / 2.38f, 0.0f)); //Works moving the object for the second object
+                mvp = proj * view * model;                                                //Update object positions to the shader
+                shader.setUniformMat4f("u_MVP", mvp);                                     //Send new positions
+                renderer.Draw(va, ib, shader);                                            //Draw new positions
+            #endif
+
             if (!test_arm.grip_status()) {
                 //Grip (resolution is a bit different 1126/1139)
                 texture10.Bind();
@@ -617,7 +628,16 @@ int main(void)
             shader.setUniformMat4f("u_MVP", mvp);                                     //Send new positions 
             renderer.Draw(va, ib, shader);                                            //Draw new positions
 
-            
+            #ifdef _DEBUG
+                //Grip point
+                texture23.Bind();
+                shader.setUniform1i("u_texture", 0);                                      // The second number needs to be the same as the "texture.Bind"
+                model = glm::translate(glm::mat4(1.0f), glm::vec3(P10a / 2.38f, P10b / 2.38f, 0.0f)); //Works moving the object for the second object
+                mvp = proj * view * model;                                                //Update object positions to the shader
+                shader.setUniformMat4f("u_MVP", mvp);                                     //Send new positions
+                renderer.Draw(va, ib, shader);                                            //Draw new positions
+            #endif
+
            if (!test_arm.grip_status()) {
                 //Grip (resolution is a bit different 1126/1139)
                 texture10.Bind();
@@ -729,11 +749,11 @@ std::cout << "The programm is finished running !" << std::endl;
     //Abstract everything
     //Test two robots, test blue for selected
     //Test movement of car
-    //FunÃ§Ã£o save point pra criar linked list com os pontos desejados
+    //Função save point pra criar linked list com os pontos desejados
     //Deletar pontos indesejados
     //Criar arquivo txt para amazenar os angulos
     //Fazer robo pegar o box automaticamente
-    //FunÃ§Ã£o move para percorrer linked list e nela checar colisao (mover somente em x caso colisao)
+    //Função move para percorrer linked list e nela checar colisao (mover somente em x caso colisao)
     //Salvar imagem da tela (https://www.ti-enxame.com/pt/c%2B%2B/como-tirar-uma-captura-de-tela-no-opengl/973055474/)
     //Juntar em video (https://stackoverflow.com/questions/46444474/c-ffmpeg-create-mp4-file)
     //Include the images in the .exe file https://stackoverflow.com/questions/47414607/how-to-include-data-object-files-images-etc-in-program-and-access-the-symbol/47415163#47415163
