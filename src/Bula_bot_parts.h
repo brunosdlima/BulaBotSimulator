@@ -160,6 +160,9 @@ public:
 #endif 
     }
 
+    void set_triangle_angle(float phia) {
+        (*this).angle12=phia;
+    }
     const float const get_triangle_angle() const {
         return angle12;
     }
@@ -405,6 +408,7 @@ public:
         std::cout << "Grip was destructed " << std::endl;
 #endif 
     }
+
     bool is_allowed_to_move() {
         if ((*this).holded_box == nullptr) return 1;
         else if ((*this).holded_box->cube_hold_status() < 2) return 1;
@@ -445,71 +449,13 @@ public:
             }
         }
     }
-
-
-
-
     void change_grip_status(float robot_ground_angle_before_attachment) {
         grip_mode = !grip_mode;
         if (grip_mode) {
             //Release when possible
+            (*this).set_triangle_angle((*this).get_triangle_angle());
             internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (ll * cos((*this).get_triangle_angle() - robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (ll * sin((*this).get_triangle_angle() - robot_ground_angle_before_attachment)));
-             if (holded_box) {
-                holded_box->box_set_robot_angle_before_attachment(0.0);
-                float d_ground = holded_box->box_get_point('a')->get_point_y();
-                if (d_ground > holded_box->box_get_point('b')->get_point_y()) {
-                    d_ground = holded_box->box_get_point('b')->get_point_y();
-                }
-                holded_box->box_de_attach('m');
-                holded_box->box_set_point('a', holded_box->box_get_point('a')->get_point_x(), holded_box->box_get_point('a')->get_point_y() - d_ground);
-                holded_box->box_set_point('b', holded_box->box_get_point('b')->get_point_x(), holded_box->box_get_point('b')->get_point_y() - d_ground);
-                holded_box->box_set_point('c', holded_box->box_get_point('c')->get_point_x(), holded_box->box_get_point('c')->get_point_y() - d_ground);
-                holded_box->box_set_point('d', holded_box->box_get_point('d')->get_point_x(), holded_box->box_get_point('d')->get_point_y() - d_ground);
-                holded_box->box_turn_back();
-            }
-            holded_box = nullptr;
-        }
-        else if (!grip_mode) {
-            //Attach when possible
-            internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (lk * cos((*this).get_triangle_angle() - robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (lk * sin((*this).get_triangle_angle() - robot_ground_angle_before_attachment)));
-            for (int i = 0; i < Box::Box_Get_Adress(2, 0).size(); i++) {
-
-
-
-                if ((*this).grip_collision_point()->get_point_x() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_x() && (*this).grip_collision_point()->get_point_x() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_x() && (*this).grip_collision_point()->get_point_y() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_y() && (*this).grip_collision_point()->get_point_y() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_y()) {
-                    (*this).holded_box = Box::Box_Get_Adress(2, 0)[i];
-                    (*this).holded_box->box_de_attach('p');
-                    (*this).holded_box->box_set_robot_angle_before_attachment(-robot_ground_angle_before_attachment);
-                    (*this).holded_box->box_set_robot_actual_angle(robot_ground_angle_before_attachment);
-
-
-
-
-                }
-            }
-        }
-    }
-
-    /*
-        public function triangleArea(A:Point,B:Point,C:Point):Number {
-			return (C.x*B.y-B.x*C.y)-(C.x*A.y-A.x*C.y)+(B.x*A.y-A.x*B.y);
-		}
-		public function isInsideSquare(A:Point,B:Point,C:Point,D:Point,P:Point):Boolean {
-			if (triangleArea(A,B,P)>0 || triangleArea(B,C,P)>0 || triangleArea(C,D,P)>0 || triangleArea(D,A,P)>0) {
-				return false;
-			}
-			return true;
-        }
-    */
-
-
-
-
-    void change_grip_status_while_mirrorred(float robot_ground_angle_before_attachment) {
-        grip_mode = !grip_mode;
-        if (grip_mode) {
-            //Release when possible
-            internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (-ll * cos((*this).get_triangle_angle() + robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (ll * sin((*this).get_triangle_angle() + robot_ground_angle_before_attachment)));
+            std::cout << (*this).get_triangle_angle()*180/3.14159265 << std::endl;
             if (holded_box) {
                 holded_box->box_set_robot_angle_before_attachment(0.0);
                 float d_ground = holded_box->box_get_point('a')->get_point_y();
@@ -526,13 +472,11 @@ public:
             holded_box = nullptr;
         }
         else if (!grip_mode) {
-            
-            
-            
-            
-            
             //Attach when possible
-            internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (-lk * cos((*this).get_triangle_angle() + robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (lk * sin((*this).get_triangle_angle() + robot_ground_angle_before_attachment)));
+            
+            (*this).set_triangle_angle((*this).get_triangle_angle());
+            internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (lk * cos((*this).get_triangle_angle() - robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (lk * sin((*this).get_triangle_angle() - robot_ground_angle_before_attachment)));
+            std::cout << (*this).get_triangle_angle() * 180 / 3.14159265 << std::endl;
             for (int i = 0; i < Box::Box_Get_Adress(2, 0).size(); i++) {
                 if ((*this).grip_collision_point()->get_point_x() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_x() && (*this).grip_collision_point()->get_point_x() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_x() && (*this).grip_collision_point()->get_point_y() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_y() && (*this).grip_collision_point()->get_point_y() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_y()) {
                     (*this).holded_box = Box::Box_Get_Adress(2, 0)[i];
@@ -540,8 +484,52 @@ public:
                     (*this).holded_box->box_set_robot_angle_before_attachment(-robot_ground_angle_before_attachment);
                     (*this).holded_box->box_set_robot_actual_angle(robot_ground_angle_before_attachment);
                 }
-
-
+                /*
+                        public function triangleArea(A:Point,B:Point,C:Point):Number {
+                            return (C.x*B.y-B.x*C.y)-(C.x*A.y-A.x*C.y)+(B.x*A.y-A.x*B.y);
+                        }
+                        public function isInsideSquare(A:Point,B:Point,C:Point,D:Point,P:Point):Boolean {
+                            if (triangleArea(A,B,P)>0 || triangleArea(B,C,P)>0 || triangleArea(C,D,P)>0 || triangleArea(D,A,P)>0) {
+                                return false;
+                            }
+                            return true;
+                        }
+                */
+            }
+        }
+    }
+    void change_grip_status_while_mirrorred(float robot_ground_angle_before_attachment) {
+        grip_mode = !grip_mode;
+        if (grip_mode) {
+            //Release when possible
+            internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (-ll * cos((*this).get_triangle_angle() + robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (ll * sin((*this).get_triangle_angle() + robot_ground_angle_before_attachment)));
+            std::cout << (*this).get_triangle_angle() * 180 / 3.14159265 << std::endl;
+            if (holded_box) {
+                holded_box->box_set_robot_angle_before_attachment(0.0);
+                float d_ground = holded_box->box_get_point('a')->get_point_y();
+                if (d_ground > holded_box->box_get_point('b')->get_point_y()) {
+                    d_ground = holded_box->box_get_point('b')->get_point_y();
+                }
+                holded_box->box_de_attach('m');
+                holded_box->box_set_point('a', holded_box->box_get_point('a')->get_point_x(), holded_box->box_get_point('a')->get_point_y() - d_ground);
+                holded_box->box_set_point('b', holded_box->box_get_point('b')->get_point_x(), holded_box->box_get_point('b')->get_point_y() - d_ground);
+                holded_box->box_set_point('c', holded_box->box_get_point('c')->get_point_x(), holded_box->box_get_point('c')->get_point_y() - d_ground);
+                holded_box->box_set_point('d', holded_box->box_get_point('d')->get_point_x(), holded_box->box_get_point('d')->get_point_y() - d_ground);
+                holded_box->box_turn_back();
+            }
+            holded_box = nullptr;
+        }
+        else if (!grip_mode) {
+            //Attach when possible
+            internal_collision.set_point((*this).triangle_get_point('a')->get_point_x() + (-lk * cos((*this).get_triangle_angle() + robot_ground_angle_before_attachment)), (*this).triangle_get_point('a')->get_point_y() + (lk * sin((*this).get_triangle_angle() + robot_ground_angle_before_attachment)));
+            std::cout << (*this).get_triangle_angle() * 180 / 3.14159265 << std::endl;
+            for (int i = 0; i < Box::Box_Get_Adress(2, 0).size(); i++) {
+                if ((*this).grip_collision_point()->get_point_x() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_x() && (*this).grip_collision_point()->get_point_x() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_x() && (*this).grip_collision_point()->get_point_y() > Box::Box_Get_Adress(2, 0)[i]->box_get_point('a')->get_point_y() && (*this).grip_collision_point()->get_point_y() < Box::Box_Get_Adress(2, 0)[i]->box_get_point('d')->get_point_y()) {
+                    (*this).holded_box = Box::Box_Get_Adress(2, 0)[i];
+                    (*this).holded_box->box_de_attach('p');
+                    (*this).holded_box->box_set_robot_angle_before_attachment(-robot_ground_angle_before_attachment);
+                    (*this).holded_box->box_set_robot_actual_angle(robot_ground_angle_before_attachment);
+                }
                 /*
                 public function triangleArea(A:Point,B:Point,C:Point):Number {
 			        return (C.x*B.y-B.x*C.y)-(C.x*A.y-A.x*C.y)+(B.x*A.y-A.x*B.y);
@@ -553,16 +541,7 @@ public:
 			        return true;
 		        }
                 */
-
-
-
-
             }
-
-
-
-
-
         }
     }
     void print_grip_coordinates() const {
@@ -766,7 +745,12 @@ public:
                 upward_mechanism.set_four_bar_points((*this).theta_M1, (*this).theta_M2, origin, la, le, lc, lf);
                 linkage_triangle.set_triangle_points((3.14159265 - atan2((backward_mechanism.four_bar_get_point('c')->get_point_y() - backward_mechanism.four_bar_get_point('d')->get_point_y()), (backward_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('c')->get_point_x())) - theta37), *backward_mechanism.four_bar_get_point('d'), *backward_mechanism.four_bar_get_point('c'), lh);
                 driven_mechanism.set_four_bar_points(atan2((backward_mechanism.four_bar_get_point('d')->get_point_y() - upward_mechanism.four_bar_get_point('c')->get_point_y()), (backward_mechanism.four_bar_get_point('d')->get_point_x() - upward_mechanism.four_bar_get_point('c')->get_point_x())), (3.14159265 - atan2((backward_mechanism.four_bar_get_point('c')->get_point_y() - backward_mechanism.four_bar_get_point('d')->get_point_y()), (backward_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('c')->get_point_x())) - theta37), *(backward_mechanism.four_bar_get_point('d')), li, lh, lc, lj);
-                end_grip.set_grip_points(atan2((driven_mechanism.four_bar_get_point('c')->get_point_y() - driven_mechanism.four_bar_get_point('d')->get_point_y()), (driven_mechanism.four_bar_get_point('c')->get_point_x() - driven_mechanism.four_bar_get_point('d')->get_point_x())) - theta810, *driven_mechanism.four_bar_get_point('d'), *driven_mechanism.four_bar_get_point('c'), lk + 15, lk, (*this).is_mirrorred);
+                if ((*this).is_mirrorred) {
+                    end_grip.set_grip_points(atan2((driven_mechanism.four_bar_get_point('c')->get_point_y() - driven_mechanism.four_bar_get_point('d')->get_point_y()), (driven_mechanism.four_bar_get_point('c')->get_point_x() - driven_mechanism.four_bar_get_point('d')->get_point_x())) - theta810, *driven_mechanism.four_bar_get_point('d'), *driven_mechanism.four_bar_get_point('c'), lk + 18.5, lk+3, (*this).is_mirrorred);
+                }
+                else {
+                    end_grip.set_grip_points(atan2((driven_mechanism.four_bar_get_point('c')->get_point_y() - driven_mechanism.four_bar_get_point('d')->get_point_y()), (driven_mechanism.four_bar_get_point('c')->get_point_x() - driven_mechanism.four_bar_get_point('d')->get_point_x())) - theta810, *driven_mechanism.four_bar_get_point('d'), *driven_mechanism.four_bar_get_point('c'), lk + 15.5, lk+2, (*this).is_mirrorred);
+                }
                 theta_138 = acos(-(((backward_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('a')->get_point_x()) * ((driven_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('a')->get_point_x()) - (backward_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('a')->get_point_x()))) + (backward_mechanism.four_bar_get_point('d')->get_point_y() - backward_mechanism.four_bar_get_point('a')->get_point_y()) * ((driven_mechanism.four_bar_get_point('d')->get_point_y() - backward_mechanism.four_bar_get_point('a')->get_point_y()) - (backward_mechanism.four_bar_get_point('d')->get_point_y() - backward_mechanism.four_bar_get_point('a')->get_point_y()))) / (la * li));             
                 if ((theta_138 > forward_max_contact) && (theta_138 < backward_max_contact) && ((backward_mechanism.four_bar_get_point('d')->get_point_y() < driven_mechanism.four_bar_get_point('d')->get_point_y()) || ((driven_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('d')->get_point_x()) > li * cos(Maximum_angle_long_arm)))){ //Conditions for internal collision                    
                     return 1;
@@ -779,7 +763,12 @@ public:
                     upward_mechanism.set_four_bar_points((*this).theta_M1, (*this).theta_M2, origin, la, le, lc, lf);
                     linkage_triangle.set_triangle_points((3.14159265 - atan2((backward_mechanism.four_bar_get_point('c')->get_point_y() - backward_mechanism.four_bar_get_point('d')->get_point_y()), (backward_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('c')->get_point_x())) - theta37), *backward_mechanism.four_bar_get_point('d'), *backward_mechanism.four_bar_get_point('c'), lh);
                     driven_mechanism.set_four_bar_points(atan2((backward_mechanism.four_bar_get_point('d')->get_point_y() - upward_mechanism.four_bar_get_point('c')->get_point_y()), (backward_mechanism.four_bar_get_point('d')->get_point_x() - upward_mechanism.four_bar_get_point('c')->get_point_x())), (3.14159265 - atan2((backward_mechanism.four_bar_get_point('c')->get_point_y() - backward_mechanism.four_bar_get_point('d')->get_point_y()), (backward_mechanism.four_bar_get_point('d')->get_point_x() - backward_mechanism.four_bar_get_point('c')->get_point_x())) - theta37), *(backward_mechanism.four_bar_get_point('d')), li, lh, lc, lj);
-                    end_grip.set_grip_points(atan2((driven_mechanism.four_bar_get_point('c')->get_point_y() - driven_mechanism.four_bar_get_point('d')->get_point_y()), (driven_mechanism.four_bar_get_point('c')->get_point_x() - driven_mechanism.four_bar_get_point('d')->get_point_x())) - theta810, *driven_mechanism.four_bar_get_point('d'), *driven_mechanism.four_bar_get_point('c'), lk + 15, lk, (*this).is_mirrorred);
+                    if ((*this).is_mirrorred) {
+                        end_grip.set_grip_points(atan2((driven_mechanism.four_bar_get_point('c')->get_point_y() - driven_mechanism.four_bar_get_point('d')->get_point_y()), (driven_mechanism.four_bar_get_point('c')->get_point_x() - driven_mechanism.four_bar_get_point('d')->get_point_x())) - theta810, *driven_mechanism.four_bar_get_point('d'), *driven_mechanism.four_bar_get_point('c'), lk + 18.5, lk + 3, (*this).is_mirrorred);
+                    }
+                    else {
+                        end_grip.set_grip_points(atan2((driven_mechanism.four_bar_get_point('c')->get_point_y() - driven_mechanism.four_bar_get_point('d')->get_point_y()), (driven_mechanism.four_bar_get_point('c')->get_point_x() - driven_mechanism.four_bar_get_point('d')->get_point_x())) - theta810, *driven_mechanism.four_bar_get_point('d'), *driven_mechanism.four_bar_get_point('c'), lk + 15.5, lk + 2, (*this).is_mirrorred);
+                    } 
                     return 0;
                 }
             }
