@@ -359,6 +359,7 @@ int main(void)
             std::cout << "Cube angle: " << cube1.box_get_angle() * 180 / 3.14159265 << std::endl; //(*this).cube_angle
             std::cout << "Actual robot angle: " << test_arm.get_ground_angle() * 180 / 3.14159265 << std::endl;
             std::cout << "Robot angle before grip: " << test_arm.get_angle_before_grip() * 180 / 3.14159265 << std::endl;
+            std::cout << "Robot angle before grip inside box: " << cube1.box_get_robot_angle_before_attachment() * 180 / 3.14159265 << std::endl;
         }
 
         // press TAB to change current robot //*********************************************** TO DO LIST, make the selected robot blue
