@@ -556,6 +556,7 @@ public:
 class Robot_arm {
 private:
     bool is_mirrorred;
+    bool already_mirrorred_while_hold;
     Point origin;
     float Initial_robot_x, Initial_robot_y, angle_before_grip_closes, xz_angle, theta_M1_max, theta_M1_min, theta_M2_max, theta_M2_min, le, lc, la, lf, li, ld, lh, lg, lb, lj, lk, theta1, theta37, theta810, theta_M1, theta_M2, forward_max_contact, backward_max_contact, Maximum_angle_long_arm;
     mutable float theta_M1_searched;
@@ -641,7 +642,7 @@ private:
     }
 
 public:
-    Robot_arm(const Robot_arm& to_copy) : Initial_robot_x(to_copy.Initial_robot_x), Initial_robot_y(to_copy.Initial_robot_y), angle_before_grip_closes(0.0), is_mirrorred(to_copy.is_mirrorred), origin(to_copy.origin), xz_angle(to_copy.xz_angle), theta_M1_max(to_copy.theta_M1_max), theta_M1_min(to_copy.theta_M1_min), theta_M2_max(to_copy.theta_M2_max), theta_M2_min(to_copy.theta_M2_min), le(to_copy.le), lc(to_copy.lc), la(to_copy.la), lf(to_copy.lf), li(to_copy.li), ld(to_copy.ld), lh(to_copy.lh), lg(to_copy.lg), lb(to_copy.lb), lj(to_copy.lj), lk(to_copy.lk), theta1(to_copy.theta1), theta37(to_copy.theta37), theta810(to_copy.theta810), theta_M1(to_copy.theta_M1), theta_M2(to_copy.theta_M2), theta_M1_searched(0), theta_M2_searched(0), forward_max_contact(to_copy.forward_max_contact), backward_max_contact(to_copy.backward_max_contact), Maximum_angle_long_arm(to_copy.Maximum_angle_long_arm) {
+    Robot_arm(const Robot_arm& to_copy) : Initial_robot_x(to_copy.Initial_robot_x), Initial_robot_y(to_copy.Initial_robot_y), angle_before_grip_closes(0.0), is_mirrorred(to_copy.is_mirrorred), already_mirrorred_while_hold(to_copy.already_mirrorred_while_hold), origin(to_copy.origin), xz_angle(to_copy.xz_angle), theta_M1_max(to_copy.theta_M1_max), theta_M1_min(to_copy.theta_M1_min), theta_M2_max(to_copy.theta_M2_max), theta_M2_min(to_copy.theta_M2_min), le(to_copy.le), lc(to_copy.lc), la(to_copy.la), lf(to_copy.lf), li(to_copy.li), ld(to_copy.ld), lh(to_copy.lh), lg(to_copy.lg), lb(to_copy.lb), lj(to_copy.lj), lk(to_copy.lk), theta1(to_copy.theta1), theta37(to_copy.theta37), theta810(to_copy.theta810), theta_M1(to_copy.theta_M1), theta_M2(to_copy.theta_M2), theta_M1_searched(0), theta_M2_searched(0), forward_max_contact(to_copy.forward_max_contact), backward_max_contact(to_copy.backward_max_contact), Maximum_angle_long_arm(to_copy.Maximum_angle_long_arm) {
         (*this).Robot_Get_Counting(1);
         (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
     }
@@ -650,6 +651,7 @@ public:
         Initial_robot_y = 25.763f;
         (*this).Robot_Get_Counting(1);
         is_mirrorred = false;
+        already_mirrorred_while_hold = false;
         xz_angle = 0.0f;
         origin.set_point(0.0, 0.0);
         theta_M1_searched = 0.0f;
@@ -693,7 +695,7 @@ public:
         (*this).set_robot_arm_points(theta_M1_max, theta_M2_max, false); //theta_M1_max, theta_M2_max
         (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
     }
-    Robot_arm(float Initial_robot_xa, float Initial_robot_ya, const bool& mirrorred, const Point& origina, const float& xz_anglea, const float& theta_M1_maxa, const float& theta_M1_mina, const float& theta_M2_maxa, const float& theta_M2_mina, const float& lea, const float& lca, const float& laa, const float& lfa, const float& lia, const float& lda, const float& lha, const float& lga, const float& lba, const float& lja, const float& lka, const float& theta1a, const float& theta37a, const float& theta810a, const float& theta_M1a, const float& theta_M2a, const float& forward_max_contacta, const float& backward_max_contacta, const float& Maximum_angle_long_arma) : Initial_robot_x(Initial_robot_xa), Initial_robot_y(Initial_robot_ya), angle_before_grip_closes(0.0), is_mirrorred(mirrorred), origin(origina), xz_angle(xz_anglea), theta_M1_max(theta_M1_maxa), theta_M1_min(theta_M1_mina), theta_M2_max(theta_M2_maxa), theta_M2_min(theta_M2_mina), le(lea), lc(lca), la(laa), lf(lfa), li(lia), ld(lda), lh(lha), lg(lga), lb(lba), lj(lja), lk(lka), theta1(theta1a), theta37(theta37a), theta810(theta810a), theta_M1(theta_M1a), theta_M2(theta_M2a), theta_M1_searched(0), theta_M2_searched(0), forward_max_contact(forward_max_contacta), backward_max_contact(backward_max_contacta), Maximum_angle_long_arm(Maximum_angle_long_arma) {
+    Robot_arm(float Initial_robot_xa, float Initial_robot_ya, const bool& mirrorred, const Point& origina, const float& xz_anglea, const float& theta_M1_maxa, const float& theta_M1_mina, const float& theta_M2_maxa, const float& theta_M2_mina, const float& lea, const float& lca, const float& laa, const float& lfa, const float& lia, const float& lda, const float& lha, const float& lga, const float& lba, const float& lja, const float& lka, const float& theta1a, const float& theta37a, const float& theta810a, const float& theta_M1a, const float& theta_M2a, const float& forward_max_contacta, const float& backward_max_contacta, const float& Maximum_angle_long_arma) : Initial_robot_x(Initial_robot_xa), Initial_robot_y(Initial_robot_ya), angle_before_grip_closes(0.0), is_mirrorred(mirrorred), already_mirrorred_while_hold(already_mirrorred_while_hold), origin(origina), xz_angle(xz_anglea), theta_M1_max(theta_M1_maxa), theta_M1_min(theta_M1_mina), theta_M2_max(theta_M2_maxa), theta_M2_min(theta_M2_mina), le(lea), lc(lca), la(laa), lf(lfa), li(lia), ld(lda), lh(lha), lg(lga), lb(lba), lj(lja), lk(lka), theta1(theta1a), theta37(theta37a), theta810(theta810a), theta_M1(theta_M1a), theta_M2(theta_M2a), theta_M1_searched(0), theta_M2_searched(0), forward_max_contact(forward_max_contacta), backward_max_contact(backward_max_contacta), Maximum_angle_long_arm(Maximum_angle_long_arma) {
         (*this).Robot_Get_Counting(1);
         (*this).set_robot_arm_points(theta_M1_max, theta_M2_max, false);
         (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
@@ -705,6 +707,12 @@ public:
 #endif   
     }
 
+    const float get_ground_angle() const {
+        return (*this).xz_angle;
+    }
+    const float get_angle_before_grip() const {
+        return (*this).angle_before_grip_closes;
+    }
     bool mirror_status() {
         return (*this).is_mirrorred;
     }
@@ -1034,6 +1042,22 @@ public:
                     (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
                 }
                 else if ((*this).xz_angle != -(*this).end_grip.holded_box->box_get_angle()) {
+                    if ((*this).already_mirrorred_while_hold && (*this).get_ground_angle() < 1.57079632679 && (*this).end_grip.holded_box->box_get_angle() < 1.57079632679) {
+                        if ((*this).end_grip.holded_box->box_get_point('c')->get_point_x() < (*this).end_grip.holded_box->box_get_point('b')->get_point_x()) {
+                            Point temp_local;
+                            temp_local.set_point((*this).end_grip.holded_box->box_get_point('b')->get_point_x(), (*this).end_grip.holded_box->box_get_point('b')->get_point_y());
+                            (*this).end_grip.holded_box->box_set_point('b', (*this).end_grip.holded_box->box_get_point('c')->get_point_x(), (*this).end_grip.holded_box->box_get_point('c')->get_point_y());
+                            (*this).end_grip.holded_box->box_set_point('c', temp_local.get_point_x(), temp_local.get_point_y());
+                        }
+
+
+
+                        //*************************************** check the else statement here to make it work for angles greater than 90 degrees
+
+
+
+
+                    }
                     float temp_Ax = (*this).end_grip.holded_box->box_get_point('a')->get_point_x(), temp_Ay = (*this).end_grip.holded_box->box_get_point('a')->get_point_y();
                     float temp_Bx = (*this).end_grip.holded_box->box_get_point('b')->get_point_x(), temp_By = (*this).end_grip.holded_box->box_get_point('b')->get_point_y();
                     float temp_Cx = (*this).end_grip.holded_box->box_get_point('c')->get_point_x(), temp_Cy = (*this).end_grip.holded_box->box_get_point('c')->get_point_y();
@@ -1074,11 +1098,13 @@ public:
                         (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
                     }
                 }
+                (*this).angle_before_grip_closes = (*this).xz_angle + (*this).end_grip.holded_box->box_get_angle();
+                (*this).end_grip.holded_box->box_set_robot_angle_before_attachment(-(*this).angle_before_grip_closes);
+                (*this).already_mirrorred_while_hold = !(*this).already_mirrorred_while_hold;
             }
             else {
                 (*this).mov_robot_arm_by_servos(0.0f, 0.0f, false);
             }
-
         }
         else {
             std::cout << "Cannot turn around! Object is not allowed to move." << std::endl;
