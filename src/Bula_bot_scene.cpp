@@ -350,10 +350,15 @@ int main(void)
 
         // press shift right to check debug status
         if (input.IsKeyPressed(GLFW_KEY_RIGHT_SHIFT)) {
+            std::cout << "   " << std::endl;
+            std::cout << "   " << std::endl;
+            std::cout << " *************************  " << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(200));
             test_arm.print_arm_points();
             cube1.print_cube_coordinates();
-            std::cout << "Cube angle: " << cube1.box_get_angle() << std::endl;
+            std::cout << "Cube angle: " << cube1.box_get_angle() * 180 / 3.14159265 << std::endl; //(*this).cube_angle
+            std::cout << "Actual robot angle: " << test_arm.get_ground_angle() * 180 / 3.14159265 << std::endl;
+            std::cout << "Robot angle before grip: " << test_arm.get_angle_before_grip() * 180 / 3.14159265 << std::endl;
         }
 
         // press TAB to change current robot //*********************************************** TO DO LIST, make the selected robot blue
